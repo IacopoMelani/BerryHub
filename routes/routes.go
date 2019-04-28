@@ -12,7 +12,9 @@ func InitGetRoutes(e *echo.Echo) {
 }
 
 // InitPostRoutes - Dichiara tutte le route POST
-func InitPostRoutes(e *echo.Echo) {}
+func InitPostRoutes(e *echo.Echo) {
+	e.POST("weather/data", controllers.GetWeatherData)
+}
 
 // InitStaticFile - Dichiara tuttle le route che caricano file statici
 func InitStaticFile(e *echo.Echo) {

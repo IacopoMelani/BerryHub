@@ -1,5 +1,7 @@
 <template>
-  <div id="app">Hello</div>
+  <div id="app">
+    <Home></Home>
+  </div>
 </template>
 
 <style>
@@ -37,8 +39,12 @@ body {
 </style>
 
 <script>
+import Home from "./views/Home";
 export default {
-  name: "App"
+  name: "App",
+  components: {
+    Home
+  }
 };
 </script>
 

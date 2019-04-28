@@ -16,6 +16,7 @@ func initEchoRoutes(e *echo.Echo) {
 
 	routes.InitStaticFile(e)
 	routes.InitGetRoutes(e)
+	routes.InitPostRoutes(e)
 }
 
 // InitServer - Si occupa di lanciare l'applicazione con tutte le dovute operazioni iniziali

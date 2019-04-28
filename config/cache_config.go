@@ -10,13 +10,17 @@ import (
 
 // CacheConfig - struttura dove immagazzinare le configurazioni
 type CacheConfig struct {
-	StringConnection string
-	AppPort          string
+	StringConnection       string
+	AppPort                string
+	OpenWeatherMapAPIToken string
+	OpenWeatherMapURL      string
 }
 
 var arrayEnvMapper = map[string]string{
-	"STRING_CONNECTION": "StringConnection",
-	"APP_PORT":          "AppPort",
+	"STRING_CONNECTION":        "StringConnection",
+	"APP_PORT":                 "AppPort",
+	"OPENWEATHERMAP_API_TOKEN": "OpenWeatherMapAPIToken",
+	"OPENWEATHERMAP_URL":       "OpenWeatherMapURL",
 }
 
 var cacheConfig *CacheConfig

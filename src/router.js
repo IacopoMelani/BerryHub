@@ -3,14 +3,9 @@ import Router from "vue-router";
 
 Vue.use(Router);
 
-import App from "./App.vue";
+import Weather from "./views/Weather.vue";
 
 export default new Router({
 	mode: "hash",
-	routes: [
-		{
-			path: "/foffo",
-			component: App
-		}
-	]
+	routes: [{ name: "weather", path: "/weather", component: Weather}]
 });
