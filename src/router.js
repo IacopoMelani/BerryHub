@@ -5,6 +5,7 @@ Vue.use(Router);
 
 import Weather from "./views/Weather.vue";
 import Calendar from "./views/Calendar.vue";
+import Clock from "./views/Clock.vue";
 
 export default new Router({
 	mode: "hash",
@@ -18,6 +19,11 @@ export default new Router({
 			name: "calendar",
 			path: "/calendar",
 			component: Calendar
+		},
+		{
+			name: "clock",
+			path: "/clock",
+			component: Clock
 		}
 	]
 });

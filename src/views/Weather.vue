@@ -14,11 +14,11 @@
               <img class="weather-icon" :src="currentIncon">
             </v-flex>
           </v-layout>
-          <v-card-text>
+          <v-card-text class="centered">
             <v-icon>send</v-icon>
             <span class="pl-3">{{currentWindSpeed}} km/h</span>
           </v-card-text>
-          <v-card-text>
+          <v-card-text class="centered">
             <v-icon>cloud_download</v-icon>
             <span class="pl-3">{{currentHumidity}}%</span>
           </v-card-text>
@@ -32,6 +32,7 @@
 .centered {
   align-items: center;
   display: flex;
+  justify-content: center;
 }
 .weather-icon {
   height: 100px;

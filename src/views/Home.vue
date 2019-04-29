@@ -35,7 +35,7 @@
   align-items: center;
   display: flex;
   height: 95vh;
-  overflow-y: auto;
+  justify-content: center;
 }
 
 .content {
