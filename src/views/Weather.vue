@@ -2,7 +2,7 @@
   <v-container fluid class="bgcolor-2 centered">
     <v-layout row wrap justify-center>
       <v-flex xs12>
-        <v-card class="bgcolor">
+        <v-card class="bgcolor" v-if="!isUpdating">
           <v-card-title class="headline pb-0">{{currentCityName}}</v-card-title>
           <v-subheader>{{formatDate(new Date())}}, {{currentMessage}}</v-subheader>
           <v-layout row wrap align-center text-xs-center>
@@ -23,6 +23,7 @@
             <span class="pl-3">{{currentHumidity}}%</span>
           </v-card-text>
         </v-card>
+        <v-progress-circular v-if="isUpdating" :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
       </v-flex>
     </v-layout>
   </v-container>
@@ -69,6 +70,9 @@ export default {
     },
     currentWindSpeed() {
       return this.$store.state.weather.data.windSpeed;
+    },
+    isUpdating: function() {
+      return this.$store.state.weather.updating;
     }
   },
   data() {

@@ -1,7 +1,14 @@
 <template>
   <div class="content">
     <v-container fluid grid-list-md>
-      <v-layout row wrap>
+      <v-layout
+        row
+        wrap
+        v-touch="{
+          left: () => nextComponent(),
+          right: () => previousComponent(),
+        }"
+      >
         <v-flex d-flex xs1 class="centered">
           <div>
             <v-btn flat icon color="primary" v-on:click="previousComponent()">
