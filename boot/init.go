@@ -36,7 +36,6 @@ func InitServer() {
 
 		e = echo.New()
 		e.Use(middleware.Recover())
-		e.Use(middleware.Logger())
 
 		initEchoRoutes(e)
 

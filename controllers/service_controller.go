@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"BerryHub/config"
+	"BerryHub/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -14,8 +15,22 @@ func GetWeatherData(c echo.Context) error {
 
 	config := config.GetInstance()
 
+	var content interface{}
+
+	weatherData := models.GetWeatherData()
+
+	content, err := weatherData.GetContent()
+	if err == nil {
+		return c.JSON(200, Response{
+			Status:  0,
+			Success: true,
+			Message: "ok!",
+			Content: content,
+		})
+	}
+
 	body := make(map[string]interface{})
-	err := json.NewDecoder(c.Request().Body).Decode(&body)
+	err = json.NewDecoder(c.Request().Body).Decode(&body)
 	if err != nil {
 		return c.JSON(500, Response{
 			Status:  1,
@@ -54,8 +69,6 @@ func GetWeatherData(c echo.Context) error {
 	}
 	defer res.Body.Close()
 
-	var content interface{}
-
 	if err := json.NewDecoder(res.Body).Decode(&content); err != nil {
 		return c.JSON(500, Response{
 			Status:  5,
@@ -63,6 +76,8 @@ func GetWeatherData(c echo.Context) error {
 			Message: err.Error(),
 		})
 	}
+
+	weatherData.SetContent(content)
 
 	return c.JSON(200, Response{
 		Status:  0,

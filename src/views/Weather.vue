@@ -52,6 +52,7 @@ export default {
       if (this.$store.state.weather.data.icon != "") {
         return "/weather-icons/" + this.$store.state.weather.data.icon;
       }
+      return "";
     },
     currentMessage() {
       return this.$store.state.weather.data.message;
@@ -103,6 +104,7 @@ export default {
     this.$store.dispatch("weather/getWeatherData");
 
     this.getWeatherDataId = setInterval(() => {
+      this.$store.commit("weather/resetCounter");
       this.$store.dispatch("weather/getWeatherData");
     }, 60000);
   },

@@ -44,6 +44,9 @@ export default {
   name: "App",
   components: {
     Home
+  },
+  mounted() {
+    this.$router.push("/weather");
   }
 };
 </script>

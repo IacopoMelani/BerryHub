@@ -7,6 +7,7 @@ export default {
 	state: {
 		updating: false,
 		updatingErrMsg: "",
+		counter: 0,
 		data: {
 			temp: Number,
 			pressure: Number,
@@ -20,6 +21,12 @@ export default {
 		}
 	},
 	mutations: {
+		incrementCounter: function(state) {
+			state.counter++;
+		},
+		resetCounter: function(state) {
+			state.counter = 0;
+		},
 		getWeatherDataError: function(state) {
 			state.updating = false;
 			state.updatingErrMsg = "Errore: richiesta scaduta";
@@ -47,10 +54,12 @@ export default {
 	},
 	actions: {
 		getWeatherData: function(context) {
-			if (context.state.updating) {
+			if (context.state.updating || context.state.counter >= 5) {
 				return;
 			}
 			context.commit("getWeatherDataUpdating");
+			context.commit("incrementCounter");
+
 			var lat = 0;
 			var lon = 0;
 			navigator.geolocation.getCurrentPosition(position => {

@@ -4,8 +4,8 @@
       <v-layout row wrap>
         <v-flex d-flex xs1 class="centered">
           <div>
-            <v-btn flat icon color="primary">
-              <span class="fa fa-chevron-left hover" v-on:click="previousComponent()"></span>
+            <v-btn flat icon color="primary" v-on:click="previousComponent()">
+              <span class="fa fa-chevron-left hover"></span>
             </v-btn>
           </div>
         </v-flex>
@@ -14,8 +14,8 @@
         </v-flex>
         <v-flex d-flex xs1 class="centered">
           <div>
-            <v-btn flat icon color="primary">
-              <span class="fa fa-chevron-right hover" v-on:click="nextComponent()"></span>
+            <v-btn flat icon color="primary" v-on:click="nextComponent()">
+              <span class="fa fa-chevron-right hover"></span>
             </v-btn>
           </div>
         </v-flex>
@@ -51,9 +51,6 @@
 <script>
 export default {
   name: "Home",
-  created() {
-    this.$router.push("/weather");
-  },
   methods: {
     nextComponent: function() {
       this.$store.dispatch("components/nextComponent");

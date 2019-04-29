@@ -3,7 +3,7 @@ import router from "../../router";
 export default {
 	namespaced: true,
 	state: {
-		componentsList: ["weather"],
+		componentsList: ["weather", "calendar"],
 		currentComponent: "weather",
 		updating: false
 	},
@@ -30,6 +30,7 @@ export default {
 					} else {
 						context.commit("changeCurrentComponent", context.state.componentsList[i + 1]);
 					}
+					return;
 				}
 			}
 		},
@@ -48,6 +49,7 @@ export default {
 					} else {
 						context.commit("changeCurrentComponent", context.state.componentsList[i - 1]);
 					}
+					return;
 				}
 			}
 		}
