@@ -1,6 +1,6 @@
 package models
 
-import "BerryHub/db"
+import "github.com/BerryHub/db"
 
 // ColUserRecordID - definisce il nome del campo RecordID
 const ColUserRecordID = "record_id"

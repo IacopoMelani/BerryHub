@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"BerryHub/config"
-	"BerryHub/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
+	"github.com/BerryHub/config"
+	"github.com/BerryHub/models"
 	"github.com/labstack/echo"
 )
 

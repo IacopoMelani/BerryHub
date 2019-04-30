@@ -1,8 +1,7 @@
 package routes
 
 import (
-	"BerryHub/controllers"
-
+	"github.com/BerryHub/controllers"
 	"github.com/labstack/echo"
 )
 

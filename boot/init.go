@@ -1,10 +1,10 @@
 package boot
 
 import (
-	"BerryHub/config"
-	"BerryHub/routes"
 	"sync"
 
+	"github.com/BerryHub/config"
+	"github.com/BerryHub/routes"
 	"github.com/labstack/echo/middleware"
 
 	"github.com/labstack/echo"

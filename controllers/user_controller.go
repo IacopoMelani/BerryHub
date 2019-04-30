@@ -1,8 +1,7 @@
 package controllers
 
 import (
-	"BerryHub/models"
-
+	"github.com/BerryHub/models"
 	"github.com/labstack/echo"
 )
 

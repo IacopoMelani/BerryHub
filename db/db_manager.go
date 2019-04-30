@@ -1,9 +1,9 @@
 package db
 
 import (
-	"BerryHub/config"
 	"database/sql"
 
+	"github.com/BerryHub/config"
 	// Carica il driver mysql per la connessione al db
 	_ "github.com/go-sql-driver/mysql"
 
