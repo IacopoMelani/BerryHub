@@ -1,6 +1,6 @@
 package querymanager
 
-import "BerryHub/db"
+import "github.com/BerryHub/db"
 
 // Salvable - Interfaccia per permettere di generalizzare il salvataggio di un model sul database
 type Salvable interface {

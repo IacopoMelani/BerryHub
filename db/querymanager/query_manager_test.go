@@ -1,9 +1,9 @@
 package querymanager
 
 import (
-	"BerryHub/models"
 	"testing"
 
+	"github.com/BerryHub/models"
 	"github.com/subosito/gotenv"
 )
 

@@ -1,8 +1,7 @@
 package main
 
 import (
-	"BerryHub/boot"
-
+	"github.com/BerryHub/boot"
 	"github.com/subosito/gotenv"
 )
 

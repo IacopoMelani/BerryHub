@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"BerryHub/config"
 	"encoding/json"
 	"net/http"
 	"testing"
 
+	"github.com/BerryHub/config"
 	"github.com/subosito/gotenv"
 )
 
