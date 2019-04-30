@@ -1,25 +1,5 @@
-FROM node:lts-alpine
-
-# install simple http server for serving static content
-RUN npm install -g http-server
-
-# make the 'app' folder the current working directory
-WORKDIR $GOPATH/src/github.com/BerryHub
-
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
-
-# install project dependencies
-RUN npm install
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY . .
-
-# build app for production with minification
-RUN npm run build
-
 # Start from golang v1.11 base image
-FROM golang:1.11
+FROM golang:1.11 as builder
 
 # Add Maintainer Info
 LABEL maintainer="Iacopo melani <iacopomelani4@gmail.com>"
@@ -37,8 +17,30 @@ RUN go get -d -v ./...
 # Install the package
 RUN go install -v ./...
 
-# This container exposes port 8888 to the outside world
+
+FROM node:lts-alpine
+
+# Add Maintainer Info
+LABEL maintainer="Iacopo melani <iacopomelani4@gmail.com>"
+
+# make the 'app' folder the current working directory
+WORKDIR /app
+
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
+
+# install project dependencies
+RUN npm install
+
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
+
+# build app for production with minification
+RUN npm run build
+
+# Copy the Pre-built binary file from the previous stage
+COPY --from=builder /go/bin/BerryHub .
+
 EXPOSE 8888
 
-# Run the executable
-CMD ["BerryHub"]
+CMD ["./BerryHub"]
