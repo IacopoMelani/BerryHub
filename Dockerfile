@@ -41,4 +41,4 @@ RUN go install -v ./...
 EXPOSE 8888
 
 # Run the executable
-CMD ["go-docker"]
+CMD ["BerryHub"]
