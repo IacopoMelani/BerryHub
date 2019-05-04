@@ -62,22 +62,38 @@ export default {
 
 			var lat = 0;
 			var lon = 0;
-			navigator.geolocation.getCurrentPosition(position => {
-				lat = position.coords.latitude;
-				lon = position.coords.longitude;
-				axios
-					.post("/weather/data", {lon: lon, lat: lat})
-					.then(result => {
-						if (result.data && result.data.success && result.data.content) {
-							context.commit("getWeatherDataSuccess", result.data.content);
-						} else {
-							context.commit("getWeatherDataFailed", result.data.message);
-						}
-					})
-					.catch(() => {
-						context.commit("getWeatherDataError");
-					});
-			});
+			navigator.geolocation.getCurrentPosition(
+				position => {
+					lat = position.coords.latitude;
+					lon = position.coords.longitude;
+					axios
+						.post("/weather/data", {lon: lon, lat: lat})
+						.then(result => {
+							if (result.data && result.data.success && result.data.content) {
+								context.commit("getWeatherDataSuccess", result.data.content);
+							} else {
+								context.commit("getWeatherDataFailed", result.data.message);
+							}
+						})
+						.catch(() => {
+							context.commit("getWeatherDataError");
+						});
+				},
+				() => {
+					axios
+						.post("/weather/data", {lon: 43.8805, lat: 11.09699})
+						.then(result => {
+							if (result.data && result.data.success && result.data.content) {
+								context.commit("getWeatherDataSuccess", result.data.content);
+							} else {
+								context.commit("getWeatherDataFailed", result.data.message);
+							}
+						})
+						.catch(() => {
+							context.commit("getWeatherDataError");
+						});
+				}
+			);
 		}
 	}
 };
