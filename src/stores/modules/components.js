@@ -5,12 +5,17 @@ export default {
 	state: {
 		componentsList: ["weather", "calendar", "clock"],
 		currentComponent: "weather",
-		updating: false
+		updating: false,
+		isMenu: false
 	},
 	mutations: {
 		changeCurrentComponent(state, path) {
 			state.currentComponent = path;
 			state.updating = false;
+			state.isMenu = false;
+			if (path == "menu") {
+				state.isMenu = true;
+			}
 			router.push({name: path});
 		},
 		changeCurrentComponentUpdating(state) {
@@ -18,6 +23,20 @@ export default {
 		}
 	},
 	actions: {
+		goToComponent: function(context, component) {
+			if (context.state.updating) {
+				return;
+			}
+			context.commit("changeCurrentComponentUpdating");
+			context.commit("changeCurrentComponent", component);
+		},
+		goToMenu: function(context) {
+			if (context.state.updating) {
+				return;
+			}
+			context.commit("changeCurrentComponentUpdating");
+			context.commit("changeCurrentComponent", "menu");
+		},
 		nextComponent: function(context) {
 			if (context.state.updating) {
 				return;

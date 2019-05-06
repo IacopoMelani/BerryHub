@@ -46,7 +46,7 @@ export default {
     Home
   },
   mounted() {
-    this.$router.push("/weather");
+    this.$router.push("menu");
   }
 };
 </script>

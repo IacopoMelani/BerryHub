@@ -3,6 +3,8 @@ import Router from "vue-router";
 
 Vue.use(Router);
 
+import Menu from "./views/Menu.vue";
+
 import Weather from "./views/Weather.vue";
 import Calendar from "./views/Calendar.vue";
 import Clock from "./views/Clock.vue";
@@ -10,6 +12,11 @@ import Clock from "./views/Clock.vue";
 export default new Router({
 	mode: "hash",
 	routes: [
+		{
+			name: "menu",
+			path: "/menu",
+			component: Menu
+		},
 		{
 			name: "weather",
 			path: "/weather",

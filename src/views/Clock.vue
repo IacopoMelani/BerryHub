@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-container fluid class="bgcolor-2 centered component">
+    <v-container fluid class="centered component">
       <v-layout wrap>
         <v-flex xs12 class="mb-3">
-          <v-card class="bgcolor">
+          <v-card>
             <v-time-picker :full-width="true" :use-seconds="true" :readonly="true" v-model="time"></v-time-picker>
           </v-card>
         </v-flex>
