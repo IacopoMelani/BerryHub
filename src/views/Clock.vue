@@ -22,10 +22,9 @@
           <span id="cal">
             <img src="https://i.imgur.com/DzEzjHh.png?1" alt="cal">
           </span>
-          <span id="day"></span>
-          <span id="month"></span>
-          <span id="year"></span>
-          {{dayToday}}
+          <span id="day">{{date}}</span>
+          <span id="month">{{month}}</span>
+          <span id="year">{{year}}</span>
         </p>
       </div>
     </div>
@@ -124,7 +123,7 @@ span#month {
 span#year {
   position: absolute;
   margin-top: 15px;
-  margin-left: 75px;
+  margin-left: 55px;
 }
 </style>
 
