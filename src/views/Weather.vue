@@ -16,7 +16,7 @@
           </v-layout>
           <v-card-text class="centered">
             <v-icon>send</v-icon>
-            <span class="pl-3">{{currentWindSpeed}} km/h</span>
+            <span class="pl-3">{{currentWindSpeed}} m/s</span>
           </v-card-text>
           <v-card-text class="centered">
             <v-icon>cloud_download</v-icon>
