@@ -36,6 +36,12 @@ export default {
           icon: "access_time",
           label: "Orologio",
           routeName: "clock"
+        },
+        {
+          color: "red darken-2",
+          icon: "library_books",
+          label: "Notizie",
+          routeName: "news"
         }
       ]
     };

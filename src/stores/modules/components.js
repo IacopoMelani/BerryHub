@@ -3,7 +3,7 @@ import router from "../../router";
 export default {
 	namespaced: true,
 	state: {
-		componentsList: ["weather", "calendar", "clock"],
+		componentsList: ["weather", "calendar", "clock", "news"],
 		currentComponent: "weather",
 		updating: false,
 		isMenu: false

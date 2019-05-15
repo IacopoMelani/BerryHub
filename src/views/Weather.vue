@@ -105,17 +105,17 @@ export default {
       return day + " " + monthNames[monthIndex] + " " + year;
     }
   },
-  mounted: function() {
-    this.$store.dispatch("weather/getWeatherData");
-
-    this.getWeatherDataId = setInterval(() => {
-      this.$store.commit("weather/resetCounter");
+    mounted: function() {
       this.$store.dispatch("weather/getWeatherData");
-    }, 60000);
-  },
-  destroyed: function() {
-    clearInterval(this.getWeatherDataId);
-  }
+
+      this.getWeatherDataId = setInterval(() => {
+        this.$store.commit("weather/resetCounter");
+        this.$store.dispatch("weather/getWeatherData");
+      }, 60000);
+    },
+    destroyed: function() {
+      clearInterval(this.getWeatherDataId);
+    }
 };
 </script>
 

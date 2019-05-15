@@ -8,6 +8,7 @@ import Menu from "./views/Menu.vue";
 import Weather from "./views/Weather.vue";
 import Calendar from "./views/Calendar.vue";
 import Clock from "./views/Clock.vue";
+import News from "./views/News.vue";
 
 export default new Router({
 	mode: "hash",
@@ -31,6 +32,11 @@ export default new Router({
 			name: "clock",
 			path: "/clock",
 			component: Clock
+		},
+		{
+			name: "news",
+			path: "/news",
+			component: News
 		}
 	]
 });

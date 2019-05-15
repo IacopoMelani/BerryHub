@@ -14,6 +14,8 @@ type CacheConfig struct {
 	AppPort                string
 	OpenWeatherMapAPIToken string
 	OpenWeatherMapURL      string
+	NewsAPIToken           string
+	NewsAPIURL             string
 }
 
 var arrayEnvMapper = map[string]string{
@@ -21,6 +23,8 @@ var arrayEnvMapper = map[string]string{
 	"APP_PORT":                 "AppPort",
 	"OPENWEATHERMAP_API_TOKEN": "OpenWeatherMapAPIToken",
 	"OPENWEATHERMAP_URL":       "OpenWeatherMapURL",
+	"NEWS_API_TOKEN":           "NewsAPIToken",
+	"NEWS_API_URL":             "NewsAPIURL",
 }
 
 var cacheConfig *CacheConfig
