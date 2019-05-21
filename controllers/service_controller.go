@@ -5,74 +5,23 @@ import (
 	"fmt"
 	"net/http"
 
+	durationdata "github.com/BerryHub/models/duration_data"
+
 	"github.com/BerryHub/config"
-	"github.com/BerryHub/models"
 	"github.com/labstack/echo"
 )
 
 // GetNewsData - Restituisce le infomarzioni sulle news
 func GetNewsData(c echo.Context) error {
 
-	config := config.GetInstance()
-
-	var content interface{}
-
-	newsData := models.GetNewsData()
-
-	content, err := newsData.GetContent()
-	if err == nil {
-		return c.JSON(200, Response{
-			Status:  0,
-			Success: true,
-			Message: "ok!",
-			Content: content,
-		})
-	}
-
-	req, err := http.NewRequest("GET", config.NewsAPIURL, nil)
-	if err != nil {
-		return c.JSON(500, Response{
-			Status:  3,
-			Success: false,
-			Message: err.Error(),
-		})
-	}
-
-	q := req.URL.Query()
-	q.Add("apiKey", config.NewsAPIToken)
-	q.Add("language", "it")
-	q.Add("country", "it")
-	q.Add("category", "technology")
-	req.URL.RawQuery = q.Encode()
-
-	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return c.JSON(500, Response{
-			Status:  4,
-			Success: false,
-			Message: err.Error(),
-		})
-	}
-	defer res.Body.Close()
-
-	if err := json.NewDecoder(res.Body).Decode(&content); err != nil {
-		return c.JSON(500, Response{
-			Status:  5,
-			Success: false,
-			Message: err.Error(),
-		})
-	}
-
-	newsData.SetContent(content, 60)
+	newsData := durationdata.GetNewsData()
 
 	return c.JSON(200, Response{
 		Status:  0,
 		Success: true,
 		Message: "ok!",
-		Content: content,
+		Content: newsData.Content,
 	})
-
 }
 
 // GetWeatherData - Restituisce le informazioni sul meteo
@@ -82,7 +31,7 @@ func GetWeatherData(c echo.Context) error {
 
 	var content interface{}
 
-	weatherData := models.GetWeatherData()
+	weatherData := durationdata.GetWeatherData()
 
 	content, err := weatherData.GetContent()
 	if err == nil {
