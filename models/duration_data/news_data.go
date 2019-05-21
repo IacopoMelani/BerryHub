@@ -26,9 +26,9 @@ func getNews() (interface{}, error) {
 
 	q := req.URL.Query()
 	q.Add("apiKey", config.NewsAPIToken)
-	q.Add("language", "it")
-	q.Add("country", "it")
-	q.Add("category", "technology")
+	q.Add("language", config.NewsAPILanguage)
+	q.Add("country", config.NewsAPICountry)
+	q.Add("category", config.NewsAPICategory)
 	req.URL.RawQuery = q.Encode()
 
 	client := http.Client{}

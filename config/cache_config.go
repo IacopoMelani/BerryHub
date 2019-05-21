@@ -16,6 +16,9 @@ type CacheConfig struct {
 	OpenWeatherMapURL      string
 	NewsAPIToken           string
 	NewsAPIURL             string
+	NewsAPILanguage        string
+	NewsAPICountry         string
+	NewsAPICategory        string
 }
 
 var arrayEnvMapper = map[string]string{
@@ -25,6 +28,9 @@ var arrayEnvMapper = map[string]string{
 	"OPENWEATHERMAP_URL":       "OpenWeatherMapURL",
 	"NEWS_API_TOKEN":           "NewsAPIToken",
 	"NEWS_API_URL":             "NewsAPIURL",
+	"NEWS_API_LANGUAGE":        "NewsAPILanguage",
+	"NEWS_API_COUNTRY":         "NewsAPICountry",
+	"NEWS_API_CATEGORY":        "NewsAPICategory",
 }
 
 var cacheConfig *CacheConfig
