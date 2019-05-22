@@ -18,7 +18,7 @@ var onceNews sync.Once
 func GetNewsData() *DurationData {
 	onceNews.Do(func() {
 		newsData = new(DurationData)
-		newsData.rd = new(NewsDurationData)
+		newsData.rd = NewsDurationData{}
 		newsData.sleepMinute = 60
 		newsData.Daemon()
 	})

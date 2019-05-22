@@ -1,5 +1,8 @@
 package controllers
 
+const successCode = 0
+const successMessage = "ok!"
+
 // Response - struttura di una response standard
 type Response struct {
 	Status  int         `json:"status"`

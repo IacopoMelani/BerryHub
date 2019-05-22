@@ -19,7 +19,7 @@ func GetWeatherData() *DurationData {
 	onceWeather.Do(func() {
 		weatherData = new(DurationData)
 		weatherData.sleepMinute = 15
-		weatherData.rd = new(WeatherDurationData)
+		weatherData.rd = WeatherDurationData{}
 		weatherData.Daemon()
 	})
 	return weatherData

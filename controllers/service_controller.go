@@ -12,9 +12,9 @@ func GetNewsData(c echo.Context) error {
 	newsData := durationdata.GetNewsData()
 
 	return c.JSON(200, Response{
-		Status:  0,
+		Status:  successCode,
 		Success: true,
-		Message: "ok!",
+		Message: successMessage,
 		Content: newsData.Content,
 	})
 }
@@ -25,9 +25,9 @@ func GetWeatherData(c echo.Context) error {
 	weatherData := durationdata.GetWeatherData()
 
 	return c.JSON(200, Response{
-		Status:  0,
+		Status:  successCode,
 		Success: true,
-		Message: "ok!",
+		Message: successMessage,
 		Content: weatherData.Content,
 	})
 }
