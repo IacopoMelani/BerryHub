@@ -18,14 +18,15 @@ var onceNews sync.Once
 func GetNewsData() *DurationData {
 	onceNews.Do(func() {
 		newsData = new(DurationData)
-		newsData.dr = new(NewsDurationData)
+		newsData.rd = new(NewsDurationData)
 		newsData.sleepMinute = 60
 		newsData.Daemon()
 	})
 	return newsData
 }
 
-func (w NewsDurationData) encodeQueryString(req *http.Request) {
+// EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
+func (w NewsDurationData) EncodeQueryString(req *http.Request) {
 
 	config := config.GetInstance()
 
@@ -37,15 +38,18 @@ func (w NewsDurationData) encodeQueryString(req *http.Request) {
 	req.URL.RawQuery = q.Encode()
 }
 
-func (w NewsDurationData) getBody() io.Reader {
+// GetBody - Restituisce il body da inserire in una request
+func (w NewsDurationData) GetBody() io.Reader {
 	return nil
 }
 
-func (w NewsDurationData) getMethod() string {
+// GetMethod - Restituisce il metodo della richiesta remota
+func (w NewsDurationData) GetMethod() string {
 	return "GET"
 }
 
-func (w NewsDurationData) getURL() string {
+// GetURL - Restituisce la url della richiesta remota
+func (w NewsDurationData) GetURL() string {
 	config := config.GetInstance()
 	return config.NewsAPIURL
 }

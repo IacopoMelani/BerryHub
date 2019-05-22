@@ -3,7 +3,13 @@ package boot
 import (
 	"sync"
 
-	durationdata "github.com/BerryHub/models/duration_data"
+	// dsf
+	_ "expvar"
+	// sd
+
+	// SDFSD
+	"net/http"
+	_ "net/http/pprof"
 
 	"github.com/BerryHub/config"
 	"github.com/BerryHub/routes"
@@ -36,7 +42,7 @@ func InitServer() {
 
 	go func() {
 		defer wg.Done()
-		durationdata.InitDurationData()
+		//durationdata.InitDurationData()
 	}()
 
 	go func() {
@@ -44,6 +50,9 @@ func InitServer() {
 
 		e = echo.New()
 		e.Use(middleware.Recover())
+		e.Use(middleware.Gzip())
+
+		e.GET("/debug/pprof/*", echo.WrapHandler(http.DefaultServeMux))
 
 		initEchoRoutes(e)
 

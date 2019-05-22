@@ -55,7 +55,10 @@ func GetInstance() *CacheConfig {
 // loadEnvConfig - si occupa di caricare tutte le configurazioni dell'env nella struttura di configurazione
 func (c *CacheConfig) loadEnvConfig() {
 	for envName, StructName := range arrayEnvMapper {
-		c.setField(StructName, os.Getenv(envName))
+		err := c.setField(StructName, os.Getenv(envName))
+		if err != nil {
+			panic("Errore caricamento configurazione")
+		}
 	}
 }
 

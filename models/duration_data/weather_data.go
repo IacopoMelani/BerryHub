@@ -19,13 +19,14 @@ func GetWeatherData() *DurationData {
 	onceWeather.Do(func() {
 		weatherData = new(DurationData)
 		weatherData.sleepMinute = 15
-		weatherData.dr = new(WeatherDurationData)
+		weatherData.rd = new(WeatherDurationData)
 		weatherData.Daemon()
 	})
 	return weatherData
 }
 
-func (w WeatherDurationData) encodeQueryString(req *http.Request) {
+// EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
+func (w WeatherDurationData) EncodeQueryString(req *http.Request) {
 
 	config := config.GetInstance()
 
@@ -38,15 +39,18 @@ func (w WeatherDurationData) encodeQueryString(req *http.Request) {
 	req.URL.RawQuery = q.Encode()
 }
 
-func (w WeatherDurationData) getBody() io.Reader {
+// GetBody - Restituisce il body da inserire in una request
+func (w WeatherDurationData) GetBody() io.Reader {
 	return nil
 }
 
-func (w WeatherDurationData) getMethod() string {
+// GetMethod - Restituisce il metodo della richiesta remota
+func (w WeatherDurationData) GetMethod() string {
 	return "GET"
 }
 
-func (w WeatherDurationData) getURL() string {
+// GetURL - Restituisce la url della richiesta remota
+func (w WeatherDurationData) GetURL() string {
 	config := config.GetInstance()
 	return config.OpenWeatherMapURL
 }
