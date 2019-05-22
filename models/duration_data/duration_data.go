@@ -1,31 +1,68 @@
 package durationdata
 
 import (
+	"encoding/json"
 	"errors"
+	"io"
+	"net/http"
 	"time"
 )
+
+// DurationRemote -
+type DurationRemote interface {
+	encodeQueryString(req *http.Request)
+	getBody() io.Reader
+	getMethod() string
+	getURL() string
+}
 
 // DurationData - Struct per immagazzinare i dati raccolti con il suo relativo tempo di scadenza dopo il quale è obbligato a ricevere nuovi dati
 //in alternativa è possibile definere una fuzione handler da assegnare all'istanza di DurationData, un intervallo di tempo in minuti nel quale l'handler viene richiamato per poi avviare il demone relativo alla stessa istanza
 type DurationData struct {
-	rechargeData func() (interface{}, error)
-	stopSignal   chan int
-	sleepMinute  int
-	Content      interface{}
-	ExpiredAt    time.Time
+	dr          DurationRemote
+	stopSignal  chan int
+	sleepMinute int
+	Content     interface{}
+	ExpiredAt   time.Time
 }
 
 // getDaemonData - Si occupa di prevelare i dati dall'handler e se non ci sono stati errori lo sostituisce con quello nuovo
 func (d *DurationData) getDaemonData() {
-	content, err := d.rechargeData()
+	content, err := getRemoteData(d.dr, d.dr.getMethod(), d.dr.getURL(), d.dr.getBody())
 	if err == nil {
 		d.Content = content
 	}
 }
 
+func getRemoteData(d DurationRemote, method string, url string, body io.Reader) (interface{}, error) {
+
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		return nil, err
+	}
+
+	d.encodeQueryString(req)
+
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	var content interface{}
+
+	if err := json.NewDecoder(res.Body).Decode(&content); err != nil {
+		return nil, err
+	}
+
+	return content, nil
+}
+
 // InitDurationData - Si occupa di avviare tutte le istanze di DurationData
 func InitDurationData() {
 	GetNewsData()
+	GetWeatherData()
 }
 
 // Daemon - Si occupa di avviare il demone che aggiorna i dati, esso può essere ucciso richiamando il metodo StopDaemon()

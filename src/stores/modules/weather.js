@@ -61,7 +61,7 @@ export default {
 			context.commit("incrementCounter");
 
 			axios
-				.post("/weather/data", {lon: 11.088, lat: 43.8702})
+				.post("/weather/data")
 				.then(result => {
 					if (result.data && result.data.success && result.data.content) {
 						context.commit("getWeatherDataSuccess", result.data.content);

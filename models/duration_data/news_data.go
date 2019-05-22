@@ -1,7 +1,7 @@
 package durationdata
 
 import (
-	"encoding/json"
+	"io"
 	"net/http"
 	"sync"
 
@@ -9,20 +9,25 @@ import (
 )
 
 // NewsDurationData - Defisce il tipo di duration data specifico per le news
-type NewsDurationData DurationData
+type NewsDurationData struct{}
 
 var newsData *DurationData
 var onceNews sync.Once
 
-// getNews - Si occupa di chiamare le api remote di newsAPi.org per farsi restituire le notizie
-func getNews() (interface{}, error) {
+// GetNewsData - Restituisce l'istanza di DurationData relativo alle notizie
+func GetNewsData() *DurationData {
+	onceNews.Do(func() {
+		newsData = new(DurationData)
+		newsData.dr = new(NewsDurationData)
+		newsData.sleepMinute = 60
+		newsData.Daemon()
+	})
+	return newsData
+}
+
+func (w NewsDurationData) encodeQueryString(req *http.Request) {
 
 	config := config.GetInstance()
-
-	req, err := http.NewRequest("GET", config.NewsAPIURL, nil)
-	if err != nil {
-		return nil, err
-	}
 
 	q := req.URL.Query()
 	q.Add("apiKey", config.NewsAPIToken)
@@ -30,30 +35,17 @@ func getNews() (interface{}, error) {
 	q.Add("country", config.NewsAPICountry)
 	q.Add("category", config.NewsAPICategory)
 	req.URL.RawQuery = q.Encode()
-
-	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-
-	var content interface{}
-
-	if err := json.NewDecoder(res.Body).Decode(&content); err != nil {
-		return nil, err
-	}
-
-	return content, nil
 }
 
-// GetNewsData - Restituisce l'istanza di DurationData relativo alle notizie
-func GetNewsData() *DurationData {
-	onceNews.Do(func() {
-		newsData = new(DurationData)
-		newsData.rechargeData = getNews
-		newsData.sleepMinute = 60
-		newsData.Daemon()
-	})
-	return newsData
+func (w NewsDurationData) getBody() io.Reader {
+	return nil
+}
+
+func (w NewsDurationData) getMethod() string {
+	return "GET"
+}
+
+func (w NewsDurationData) getURL() string {
+	config := config.GetInstance()
+	return config.NewsAPIURL
 }
