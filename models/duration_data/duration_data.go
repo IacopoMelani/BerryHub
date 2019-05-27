@@ -31,7 +31,7 @@ func (d *DurationData) getDaemonData() {
 	if err == nil {
 		d.mu.Lock()
 		d.Content = content
-		d.mu.Lock()
+		d.mu.Unlock()
 	}
 }
 
