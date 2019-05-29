@@ -21,13 +21,13 @@ type DurationData struct {
 
 // InitDurationData - Si occupa di avviare tutte le istanze di DurationData
 func InitDurationData() {
-	go GetNewsData()
-	go GetWeatherData()
+	GetNewsData()
+	GetWeatherData()
 }
 
 // getDaemonData - Si occupa di prevelare i dati dall'handler e se non ci sono stati errori lo sostituisce con quello nuovo
 func (d *DurationData) getDaemonData() {
-	content, err := request.GetRemoteData(d.rd, d.rd.GetMethod(), d.rd.GetURL(), d.rd.GetBody())
+	content, err := request.GetRemoteData(d.rd)
 	if err == nil {
 		d.mu.Lock()
 		d.Content = content

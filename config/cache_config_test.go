@@ -10,7 +10,7 @@ func TestCacheConfigBoot(t *testing.T) {
 
 	gotenv.Load("../.env")
 
-	config := GetInstance()
+	config := GetCacheConfig()
 
 	if config.StringConnection == "" {
 		t.Error("Errore: variabili d'ambiente non caricate correttamente")

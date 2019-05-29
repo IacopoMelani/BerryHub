@@ -28,7 +28,7 @@ func GetNewsData() *DurationData {
 // EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
 func (w NewsDurationData) EncodeQueryString(req *http.Request) {
 
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 
 	q := req.URL.Query()
 	q.Add("apiKey", config.NewsAPIToken)
@@ -50,6 +50,6 @@ func (w NewsDurationData) GetMethod() string {
 
 // GetURL - Restituisce la url della richiesta remota
 func (w NewsDurationData) GetURL() string {
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 	return config.NewsAPIURL
 }

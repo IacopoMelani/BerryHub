@@ -13,7 +13,7 @@ func TestGetAllUser(t *testing.T) {
 
 	gotenv.Load("../.env")
 
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 
 	client := http.Client{}
 

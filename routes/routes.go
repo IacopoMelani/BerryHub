@@ -18,5 +18,5 @@ func InitPostRoutes(e *echo.Echo) {
 
 // InitStaticFile - Dichiara tuttle le route che caricano file statici
 func InitStaticFile(e *echo.Echo) {
-	e.Static("*", "./dist/")
+	e.Static("/", "./dist/")
 }

@@ -15,9 +15,9 @@ type RemoteData interface {
 }
 
 // GetRemoteData - Si occupa di eseguire una una richiesta remota
-func GetRemoteData(r RemoteData, method string, url string, body io.Reader) (interface{}, error) {
+func GetRemoteData(r RemoteData) (interface{}, error) {
 
-	req, err := http.NewRequest(method, url, body)
+	req, err := http.NewRequest(r.GetMethod(), r.GetURL(), r.GetBody())
 	if err != nil {
 		return nil, err
 	}

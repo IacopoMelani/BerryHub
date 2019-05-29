@@ -20,7 +20,7 @@ func GetConnection() *sql.DB {
 
 	once.Do(func() {
 
-		config := config.GetInstance()
+		config := config.GetCacheConfig()
 		conn, err := sql.Open("mysql", config.StringConnection)
 		if err != nil {
 			log.Panic(err.Error())

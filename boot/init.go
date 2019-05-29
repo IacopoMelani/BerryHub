@@ -47,7 +47,7 @@ func InitServer() {
 
 	wg.Wait()
 
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 
 	e.Logger.Fatal(e.Start(config.AppPort))
 }

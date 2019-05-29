@@ -42,8 +42,8 @@ var arrayEnvMapper = map[string]string{
 var cacheConfig *CacheConfig
 var once sync.Once
 
-// GetInstance - restituisce l'unica istanza della struttura contenente le configurazioni
-func GetInstance() *CacheConfig {
+// GetCacheConfig - restituisce l'unica istanza della struttura contenente le configurazioni
+func GetCacheConfig() *CacheConfig {
 	once.Do(func() {
 		cacheConfig = &CacheConfig{}
 		cacheConfig.loadEnvConfig()

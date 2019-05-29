@@ -28,7 +28,7 @@ func GetWeatherData() *DurationData {
 // EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
 func (w WeatherDurationData) EncodeQueryString(req *http.Request) {
 
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 
 	q := req.URL.Query()
 
@@ -51,6 +51,6 @@ func (w WeatherDurationData) GetMethod() string {
 
 // GetURL - Restituisce la url della richiesta remota
 func (w WeatherDurationData) GetURL() string {
-	config := config.GetInstance()
+	config := config.GetCacheConfig()
 	return config.OpenWeatherMapURL
 }
