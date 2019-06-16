@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"errors"
 	"sync"
 
 	durationdata "github.com/BerryHub/models/duration_data"
@@ -20,6 +21,16 @@ func initEchoRoutes(e *echo.Echo) {
 	routes.InitStaticFile(e)
 	routes.InitGetRoutes(e)
 	routes.InitPostRoutes(e)
+}
+
+// GetEcho - Restituisce l'istanza di echo, nel caso non fosse ancora istaziato restituiscce errore
+func GetEcho() (*echo.Echo, error) {
+
+	if e == nil {
+		return nil, errors.New("Echo non istaziato")
+	}
+
+	return e, nil
 }
 
 // InitServer - Si occupa di lanciare l'applicazione con tutte le dovute operazioni iniziali

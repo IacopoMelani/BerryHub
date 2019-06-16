@@ -7,7 +7,6 @@ import (
 
 // InitGetRoutes - Dichiara tutte le route GET
 func InitGetRoutes(e *echo.Echo) {
-	e.GET("user/all", controllers.GetAllUser)
 	e.GET("news/data", controllers.GetNewsData)
 }
 

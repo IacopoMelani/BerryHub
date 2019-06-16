@@ -8,8 +8,9 @@ import (
 	"github.com/BerryHub/config"
 )
 
-// WeatherDurationData - Definisce il tipo di duration data specifico per il meteo
-type WeatherDurationData struct{}
+// WeatherRemoteData - Definisce il tipo di duration data specifico per il meteo
+// implementa RemoteData
+type WeatherRemoteData struct{}
 
 var weatherData *DurationData
 var onceWeather sync.Once
@@ -19,14 +20,14 @@ func GetWeatherData() *DurationData {
 	onceWeather.Do(func() {
 		weatherData = new(DurationData)
 		weatherData.sleepMinute = 15
-		weatherData.rd = WeatherDurationData{}
+		weatherData.rd = WeatherRemoteData{}
 		weatherData.Daemon()
 	})
 	return weatherData
 }
 
 // EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
-func (w WeatherDurationData) EncodeQueryString(req *http.Request) {
+func (w WeatherRemoteData) EncodeQueryString(req *http.Request) {
 
 	config := config.GetCacheConfig()
 
@@ -40,17 +41,17 @@ func (w WeatherDurationData) EncodeQueryString(req *http.Request) {
 }
 
 // GetBody - Restituisce il body da inserire in una request
-func (w WeatherDurationData) GetBody() io.Reader {
+func (w WeatherRemoteData) GetBody() io.Reader {
 	return nil
 }
 
 // GetMethod - Restituisce il metodo della richiesta remota
-func (w WeatherDurationData) GetMethod() string {
+func (w WeatherRemoteData) GetMethod() string {
 	return "GET"
 }
 
 // GetURL - Restituisce la url della richiesta remota
-func (w WeatherDurationData) GetURL() string {
+func (w WeatherRemoteData) GetURL() string {
 	config := config.GetCacheConfig()
 	return config.OpenWeatherMapURL
 }
