@@ -8,8 +8,9 @@ import (
 	"github.com/BerryHub/config"
 )
 
-// NewsDurationData - Defisce il tipo di duration data specifico per le news
-type NewsDurationData struct{}
+// NewsRemoteData - Defisce il tipo di remote data specifico per le news
+// implementa RemoteData
+type NewsRemoteData struct{}
 
 var newsData *DurationData
 var onceNews sync.Once
@@ -18,7 +19,7 @@ var onceNews sync.Once
 func GetNewsData() *DurationData {
 	onceNews.Do(func() {
 		newsData = new(DurationData)
-		newsData.rd = NewsDurationData{}
+		newsData.rd = NewsRemoteData{}
 		newsData.sleepMinute = 60
 		newsData.Daemon()
 	})
@@ -26,7 +27,7 @@ func GetNewsData() *DurationData {
 }
 
 // EncodeQueryString - Restituisce la query string encodata per eseguire la richiesta remota
-func (w NewsDurationData) EncodeQueryString(req *http.Request) {
+func (w NewsRemoteData) EncodeQueryString(req *http.Request) {
 
 	config := config.GetCacheConfig()
 
@@ -39,17 +40,17 @@ func (w NewsDurationData) EncodeQueryString(req *http.Request) {
 }
 
 // GetBody - Restituisce il body da inserire in una request
-func (w NewsDurationData) GetBody() io.Reader {
+func (w NewsRemoteData) GetBody() io.Reader {
 	return nil
 }
 
 // GetMethod - Restituisce il metodo della richiesta remota
-func (w NewsDurationData) GetMethod() string {
+func (w NewsRemoteData) GetMethod() string {
 	return "GET"
 }
 
 // GetURL - Restituisce la url della richiesta remota
-func (w NewsDurationData) GetURL() string {
+func (w NewsRemoteData) GetURL() string {
 	config := config.GetCacheConfig()
 	return config.NewsAPIURL
 }
