@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/BerryHub/helpers/request"
+
 	"github.com/BerryHub/config"
 )
 
@@ -18,9 +20,12 @@ var onceNews sync.Once
 // GetNewsData - Restituisce l'istanza di DurationData relativo alle notizie
 func GetNewsData() *DurationData {
 	onceNews.Do(func() {
+
+		config := config.GetCacheConfig()
+
 		newsData = new(DurationData)
-		newsData.rd = NewsRemoteData{}
-		newsData.sleepMinute = 60
+		newsData.ddi = NewsRemoteData{}
+		newsData.sleepMinute = config.NewsAPITimeToRefresh
 		newsData.Daemon()
 	})
 	return newsData
@@ -53,4 +58,10 @@ func (w NewsRemoteData) GetMethod() string {
 func (w NewsRemoteData) GetURL() string {
 	config := config.GetCacheConfig()
 	return config.NewsAPIURL
+}
+
+// HandlerData - Metodo dedicato al recupero dei dati
+func (w NewsRemoteData) HandlerData() (interface{}, error) {
+	content, err := request.GetRemoteData(w)
+	return content, err
 }

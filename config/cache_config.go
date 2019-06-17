@@ -5,38 +5,43 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"strconv"
 	"sync"
 )
 
 // CacheConfig - struttura dove immagazzinare le configurazioni
 type CacheConfig struct {
-	StringConnection        string
-	AppPort                 string
-	OpenWeatherMapAPIToken  string
-	OpenWeatherMapURL       string
-	OpenWeatherMapUnits     string
-	OpenWeatherMapLatitude  string
-	OpenWeatherMapLongitude string
-	NewsAPIToken            string
-	NewsAPIURL              string
-	NewsAPILanguage         string
-	NewsAPICountry          string
-	NewsAPICategory         string
+	StringConnection            string
+	AppPort                     string
+	OpenWeatherMapAPIToken      string
+	OpenWeatherMapURL           string
+	OpenWeatherMapUnits         string
+	OpenWeatherMapLatitude      string
+	OpenWeatherMapLongitude     string
+	OpenWeatherMapTimeToRefresh int
+	NewsAPIToken                string
+	NewsAPIURL                  string
+	NewsAPILanguage             string
+	NewsAPICountry              string
+	NewsAPICategory             string
+	NewsAPITimeToRefresh        int
 }
 
 var arrayEnvMapper = map[string]string{
-	"STRING_CONNECTION":        "StringConnection",
-	"APP_PORT":                 "AppPort",
-	"OPENWEATHERMAP_API_TOKEN": "OpenWeatherMapAPIToken",
-	"OPENWEATHERMAP_URL":       "OpenWeatherMapURL",
-	"OPENWEATHERMAP_UNITS":     "OpenWeatherMapUnits",
-	"OPENWEATHERMAP_LATITUDE":  "OpenWeatherMapLatitude",
-	"OPENWEATHERMAP_LONGITUDE": "OpenWeatherMapLongitude",
-	"NEWS_API_TOKEN":           "NewsAPIToken",
-	"NEWS_API_URL":             "NewsAPIURL",
-	"NEWS_API_LANGUAGE":        "NewsAPILanguage",
-	"NEWS_API_COUNTRY":         "NewsAPICountry",
-	"NEWS_API_CATEGORY":        "NewsAPICategory",
+	"STRING_CONNECTION":              "StringConnection",
+	"APP_PORT":                       "AppPort",
+	"OPENWEATHERMAP_API_TOKEN":       "OpenWeatherMapAPIToken",
+	"OPENWEATHERMAP_URL":             "OpenWeatherMapURL",
+	"OPENWEATHERMAP_UNITS":           "OpenWeatherMapUnits",
+	"OPENWEATHERMAP_LATITUDE":        "OpenWeatherMapLatitude",
+	"OPENWEATHERMAP_LONGITUDE":       "OpenWeatherMapLongitude",
+	"OPENWEATHERMAP_TIME_TO_REFRESH": "OpenWeatherMapTimeToRefresh",
+	"NEWS_API_TOKEN":                 "NewsAPIToken",
+	"NEWS_API_URL":                   "NewsAPIURL",
+	"NEWS_API_LANGUAGE":              "NewsAPILanguage",
+	"NEWS_API_COUNTRY":               "NewsAPICountry",
+	"NEWS_API_CATEGORY":              "NewsAPICategory",
+	"NEWS_API_TIME_TO_REFRESH":       "NewsAPITimeToRefresh",
 }
 
 var cacheConfig *CacheConfig
@@ -86,12 +91,18 @@ func (c *CacheConfig) setField(name string, value string) error {
 	}
 
 	// Controllo tipo stringa
-	if fv.Kind() != reflect.String {
-		return fmt.Errorf("%s is not a string field", name)
+	if fv.Kind() == reflect.String {
+		fv.SetString(value)
+		return nil
+	}
+	if fv.Kind() == reflect.Int {
+		content, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			return errors.New("Invalid value for int")
+		}
+		fv.SetInt(content)
+		return nil
 	}
 
-	// assegno valore al campo
-	fv.SetString(value)
-
-	return nil
+	return errors.New("Invalid type for " + name)
 }
