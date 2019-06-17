@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/BerryHub/helpers/request"
+
 	"github.com/BerryHub/config"
 )
 
@@ -18,9 +20,12 @@ var onceWeather sync.Once
 // GetWeatherData - Restituisce l'istanza di DurationData relativo al meteo
 func GetWeatherData() *DurationData {
 	onceWeather.Do(func() {
+
+		config := config.GetCacheConfig()
+
 		weatherData = new(DurationData)
-		weatherData.sleepMinute = 15
-		weatherData.rd = WeatherRemoteData{}
+		weatherData.ddi = WeatherRemoteData{}
+		weatherData.sleepMinute = config.OpenWeatherMapTimeToRefresh
 		weatherData.Daemon()
 	})
 	return weatherData
@@ -54,4 +59,10 @@ func (w WeatherRemoteData) GetMethod() string {
 func (w WeatherRemoteData) GetURL() string {
 	config := config.GetCacheConfig()
 	return config.OpenWeatherMapURL
+}
+
+// HandlerData - Metodo per il recupero dei dati
+func (w WeatherRemoteData) HandlerData() (interface{}, error) {
+	content, err := request.GetRemoteData(w)
+	return content, err
 }

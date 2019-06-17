@@ -4,15 +4,18 @@ import (
 	"errors"
 	"sync"
 	"time"
-
-	"github.com/BerryHub/helpers/request"
 )
+
+// DDInterface -
+type DDInterface interface {
+	HandlerData() (interface{}, error)
+}
 
 // DurationData - Struct per immagazzinare i dati raccolti con il suo relativo tempo di scadenza dopo il quale è obbligato a ricevere nuovi dati
 //in alternativa è possibile definere una fuzione handler da assegnare all'istanza di DurationData, un intervallo di tempo in minuti nel quale l'handler viene richiamato per poi avviare il demone relativo alla stessa istanza
 type DurationData struct {
 	mu          sync.Mutex
-	rd          request.RemoteData
+	ddi         DDInterface
 	stopSignal  chan bool
 	sleepMinute int
 	Content     interface{}
@@ -27,7 +30,7 @@ func InitDurationData() {
 
 // getDaemonData - Si occupa di prevelare i dati dall'handler e se non ci sono stati errori lo sostituisce con quello nuovo
 func (d *DurationData) getDaemonData() {
-	content, err := request.GetRemoteData(d.rd)
+	content, err := d.ddi.HandlerData()
 	if err == nil {
 		d.mu.Lock()
 		d.Content = content
@@ -37,20 +40,22 @@ func (d *DurationData) getDaemonData() {
 
 // Daemon - Si occupa di avviare il demone che aggiorna i dati, esso può essere ucciso richiamando il metodo StopDaemon()
 func (d *DurationData) Daemon() {
-	go func() {
 
-		d.stopSignal = make(chan bool)
-		ticker := time.NewTicker(time.Minute * time.Duration(d.sleepMinute))
+	d.stopSignal = make(chan bool)
+
+	go func() {
+		ticker := time.NewTicker(time.Second * time.Duration(d.sleepMinute))
 
 		d.getDaemonData()
 
-		for range ticker.C {
+		for {
 			select {
 			case <-d.stopSignal:
 				ticker.Stop()
 				return
-			default:
+			case <-ticker.C:
 				d.getDaemonData()
+
 			}
 		}
 	}()
